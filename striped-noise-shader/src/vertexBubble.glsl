@@ -2,18 +2,19 @@ uniform float uTime;
 varying vec2 vUv;
 varying vec3 vPosition;
 uniform vec2 pixels;
+
 float PI = 3.141592653589793238;
 
 varying vec3 vReflect;
 varying vec3 vRefract[3];
 varying float vReflectionFactor;
 
-void main() {
+uniform float mRefractionRatio;
+uniform float mFresnelBias;
+uniform float mFresnelScale;
+uniform float mFresnelPower;
 
-    float mRefractionRatio = 1.02;
-    float mFresnelBias = 0.1;
-    float mFresnelScale = 4.0;
-    float mFresnelPower = 2.0;
+void main() {
 
 	vec4 mvPosition = modelViewMatrix * vec4( position, 1.0 );
 	vec4 worldPosition = modelMatrix * vec4( position, 1.0 );

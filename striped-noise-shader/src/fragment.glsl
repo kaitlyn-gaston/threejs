@@ -1,5 +1,6 @@
 uniform float uTime;
 uniform float progress;
+uniform float numberOfLines;
 uniform sampler2D texture1;
 uniform vec4 resolution;
 varying vec2 vUv;
@@ -39,7 +40,7 @@ float noise(vec3 p){
 float lines(vec2 uv, float offset){
     return smoothstep(
         0.0, 0.5 + offset*0.5,
-        abs(0.5*(sin(uv.x*3.0) + offset*2.0))
+        abs(0.5*(sin(uv.x*numberOfLines) + offset*2.0))
     );
 }
 
