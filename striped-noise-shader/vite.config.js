@@ -20,5 +20,6 @@ export default {
             restart: ['../static/**']
         }),
         glsl()
-    ]
+    ],
+    base: "https://kaitlyn-gaston.github.io/threejs/striped-noise-shader/dist/"
 }
