@@ -168,6 +168,8 @@ window.addEventListener('resize', () =>
 //Controls
 const controls = new OrbitControls(camera, canvas)
 controls.enableDamping = true
+//disallows panning for mobile devices
+controls.enablePan = false
 //controls.target.y = 2
 //controls.update()
 
