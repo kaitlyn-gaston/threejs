@@ -18,4 +18,5 @@ export default {
     [
         restart({ restart: [ '../static/**', ] }) // Restart server on static file change
     ],
+    base: "https://kaitlyn-gaston.github.io/threejs/12-3d-text/dist/"
 }
