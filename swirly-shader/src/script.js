@@ -15,14 +15,14 @@ import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass.js'
 //Debug
 const gui = new GUI()
 const debugObject = {
-    baseFirst: new THREE.Color(120 / 255, 158 / 255, 113 / 255),
-    baseSecond: new THREE.Color(224 / 255, 148 / 255, 66 / 255),
-    accent: new THREE.Color(0, 0, 0),
-    mRefractionRatio: 1.02,
-    mFresnelBias: 0.1,
-    mFresnelScale: 4.0,
-    mFresnelPower: 2.0,
-    numberOfLines: 1.62
+    baseFirst: new THREE.Color(23 / 255, 40 / 255, 191 / 255),
+    baseSecond: new THREE.Color(88 / 255, 13 / 255, 227 / 255),
+    accent: new THREE.Color(1 / 255, 7 / 255, 12 / 255),
+    mRefractionRatio: 0.46,
+    mFresnelBias: 0.62,
+    mFresnelScale: 1.44,
+    mFresnelPower: 1.8,
+    numberOfLines: 2.73
 };
 const colorFolder = gui.addFolder('Color Controls')
 const behaviorFolder = gui.addFolder('Behavior Controls')
@@ -73,10 +73,10 @@ const material = new THREE.ShaderMaterial({
     fragmentShader:fragment,
     uniforms: {
         uTime: { value: 0 },
-        baseFirst: { value: new THREE.Color(120/255,158/255,113/255)},
-        accent: { value: new THREE.Color(0,0,0) },
-        baseSecond: { value: new THREE.Color(224/255,148/255,66/255)},
-        numberOfLines: { value: 1.62}
+        baseFirst: { value: debugObject.baseFirst},
+        accent: { value: debugObject.accent},
+        baseSecond: { value: debugObject.baseSecond},
+        numberOfLines: { value: debugObject.numberOfLines}
     },
     side:THREE.DoubleSide
 })
@@ -88,10 +88,10 @@ const material2 = new THREE.ShaderMaterial({
     uniforms: {
         uTime: { value: 0 },
         tCube: { value: 0 },
-        mRefractionRatio: { value: 1.02},
-        mFresnelBias: { value: 0.1},
-        mFresnelScale: { value: 4.0},
-        mFresnelPower: { value: 2.0 }
+        mRefractionRatio: { value: debugObject.mRefractionRatio },
+        mFresnelBias: { value: debugObject.mFresnelBias },
+        mFresnelScale: { value: debugObject.mFresnelScale },
+        mFresnelPower: { value: debugObject.mFresnelPower }
     }
 })
 

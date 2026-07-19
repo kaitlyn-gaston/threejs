@@ -73,10 +73,10 @@ const material = new THREE.ShaderMaterial({
     fragmentShader:fragment,
     uniforms: {
         uTime: { value: 0 },
-        baseFirst: { value: new THREE.Color(120/255,158/255,113/255)},
-        accent: { value: new THREE.Color(0,0,0) },
-        baseSecond: { value: new THREE.Color(224/255,148/255,66/255)},
-        numberOfLines: { value: 1.62}
+        baseFirst: { value: debugObject.baseFirst},
+        accent: { value: debugObject.accent},
+        baseSecond: { value: debugObject.baseSecond},
+        numberOfLines: { value: debugObject.numberOfLines}
     },
     side:THREE.DoubleSide
 })
@@ -88,10 +88,10 @@ const material2 = new THREE.ShaderMaterial({
     uniforms: {
         uTime: { value: 0 },
         tCube: { value: 0 },
-        mRefractionRatio: { value: 1.02},
-        mFresnelBias: { value: 0.1},
-        mFresnelScale: { value: 4.0},
-        mFresnelPower: { value: 2.0 }
+        mRefractionRatio: { value: debugObject.mRefractionRatio },
+        mFresnelBias: { value: debugObject.mFresnelBias },
+        mFresnelScale: { value: debugObject.mFresnelScale },
+        mFresnelPower: { value: debugObject.mFresnelPower }
     }
 })
 
