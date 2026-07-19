@@ -18,12 +18,13 @@ const debugObject = {
     baseFirst: new THREE.Color(23 / 255, 40 / 255, 191 / 255),
     baseSecond: new THREE.Color(88 / 255, 13 / 255, 227 / 255),
     accent: new THREE.Color(1 / 255, 7 / 255, 12 / 255),
-    mRefractionRatio: 0.46,
-    mFresnelBias: 0.62,
-    mFresnelScale: 1.44,
-    mFresnelPower: 1.8,
-    numberOfLines: 2.73
+    mRefractionRatio: 0.71,
+    mFresnelBias: 0.0,
+    mFresnelScale: 0.51,
+    mFresnelPower: 3.22,
+    numberOfLines: 3.64
 };
+
 const colorFolder = gui.addFolder('Color Controls')
 const behaviorFolder = gui.addFolder('Behavior Controls')
 
