@@ -15,14 +15,14 @@ import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass.js'
 //Debug
 const gui = new GUI()
 const debugObject = {
-    baseFirst: new THREE.Color(23 / 255, 40 / 255, 191 / 255),
-    baseSecond: new THREE.Color(88 / 255, 13 / 255, 227 / 255),
+    baseFirst: new THREE.Color(45 / 255, 45 / 255, 238 / 255),
+    baseSecond: new THREE.Color(193 / 255, 30 / 255, 87 / 255),
     accent: new THREE.Color(1 / 255, 7 / 255, 12 / 255),
-    mRefractionRatio: 0.71,
+    mRefractionRatio: 0.82,
     mFresnelBias: 0.0,
     mFresnelScale: 0.51,
     mFresnelPower: 3.22,
-    numberOfLines: 3.64
+    numberOfLines: 3.46
 };
 
 const colorFolder = gui.addFolder('Color Controls')
@@ -200,9 +200,9 @@ const composer = new EffectComposer(renderer)
 const initPost = () => {
     composer.addPass(new RenderPass(scene, camera))
 
-    const effect1 = new ShaderPass(DotShader)
-    effect1.uniforms['scale'].value = 4
-    composer.addPass(effect1)
+    //const effect1 = new ShaderPass(DotShader)
+    //effect1.uniforms['scale'].value = 4
+    //composer.addPass(effect1)
 }
 
 initPost()
