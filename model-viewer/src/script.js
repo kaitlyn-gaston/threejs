@@ -10,7 +10,7 @@ import { Sky } from 'three/addons/objects/Sky.js';
  * Base
  */
 // Debug
-//const gui = new GUI()
+const gui = new GUI()
 
 // Loader
 const loader = new GLTFLoader()
@@ -78,8 +78,9 @@ camera.position.z = 3
 scene.add(camera)
 
 // Lights
-const hemiLight = new THREE.HemisphereLight(0x00ffff, 0xff00ff, 1)
+const hemiLight = new THREE.HemisphereLight(0xbcee11, 0x0aaef5, 12.379)
 hemiLight.position.set(0.2,2,0.5)
+
 scene.add(hemiLight)
 
 // Point light
@@ -107,6 +108,31 @@ scene.add( sky );
 const controls = new OrbitControls(camera, canvas)
 controls.enableDamping = true
 
+const lightData = {
+    skyColor: hemiLight.color.getHex(),
+    groundColor: hemiLight.groundColor.getHex()
+}
+
+const hemiFolder = gui.addFolder('Hemisphere Light')
+
+hemiFolder.add(hemiLight, 'intensity').min(0.0).max(20).step(0.001)
+
+hemiFolder.addColor(lightData, 'groundColor').onChange((value) => {
+    hemiLight.groundColor.set(value)
+})
+
+hemiFolder.addColor(lightData, 'skyColor').onChange((value) => {
+    hemiLight.color.set(value)
+})
+
+const pointFolder = gui.addFolder('Point Light')
+
+pointFolder.add(pointLight, 'intensity').min(0.0).max(20).step(0.001)
+
+const ambientFolder = gui.addFolder('Ambient Light')
+
+ambientFolder.add(ambientLight, 'intensity').min(0.0).max(20).step(0.001)
+
 /**
  * Renderer
  */
@@ -119,7 +145,7 @@ renderer.setSize(sizes.width, sizes.height)
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 
 const composer = new EffectComposer(renderer);
-const pixelPass = new RenderPixelatedPass(3, scene, camera);
+const pixelPass = new RenderPixelatedPass(2, scene, camera);
 pixelPass.normalEdgeStrength = 0.0
 pixelPass.depthEdgeStrength = 0.1
 composer.addPass(pixelPass);
