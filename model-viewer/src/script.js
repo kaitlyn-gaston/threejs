@@ -22,7 +22,7 @@ const canvas = document.querySelector('canvas.webgl')
 const scene = new THREE.Scene()
 
 // Test model
-loader.load( '/goldfish.glb', function ( gltf ) {
+loader.load( './goldfish.glb', function ( gltf ) {
     const goldfish = gltf.scene;
     goldfish.traverse((child) => {
         if (child.isMesh) {
