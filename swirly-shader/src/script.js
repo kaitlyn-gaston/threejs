@@ -169,6 +169,7 @@ window.addEventListener('resize', () =>
 //Controls
 const controls = new OrbitControls(camera, canvas)
 controls.enableDamping = true
+controls.enablePan = false
 //controls.target.y = 2
 //controls.update()
 
