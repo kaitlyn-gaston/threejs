@@ -1,4 +1,5 @@
 import restart from 'vite-plugin-restart'
+import glsl from 'vite-plugin-glsl'
 
 export default {
     root: 'src/', // Sources files (typically where index.html is)
@@ -14,9 +15,11 @@ export default {
         emptyOutDir: true, // Empty the folder first
         sourcemap: true // Add sourcemap
     },
-    plugins:
-    [
-        restart({ restart: [ '../static/**', ] }) // Restart server on static file change
+    plugins: [
+        restart({
+            restart: ['../static/**']
+        }),
+        glsl()
     ],
     base: "https://kaitlyn-gaston.github.io/threejs/model-viewer/dist/"
 }
