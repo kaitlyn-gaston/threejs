@@ -7,11 +7,14 @@ import GUI from 'lil-gui'
 const gui = new GUI()
 
 const parameters = {
-    materialColor: '#ffeded'
+    materialColor: '#f44900'
 }
 
 gui
     .addColor(parameters, 'materialColor')
+    .onChange(() => {
+        material.color.set(parameters.materialColor)
+    })
 
 /**
  * Base
@@ -22,10 +25,19 @@ const canvas = document.querySelector('canvas.webgl')
 // Scene
 const scene = new THREE.Scene()
 
+// Texture
+const textureLoader = new THREE.TextureLoader()
+const gradientTexture = textureLoader.load('textures/gradients/3.jpg')
+gradientTexture.magFilter = THREE.NearestFilter
+
 // Material
-const material = new THREE.MeshToonMaterial({color: parameters.materialColor})
+const material = new THREE.MeshToonMaterial({
+    color: parameters.materialColor,
+    gradientMap: gradientTexture
+})
 
 // Objects
+const objectsDistance = 4
 const mesh1 = new THREE.Mesh(
     new THREE.TorusGeometry(1, 0.4, 16, 60),
     material
@@ -39,7 +51,17 @@ const mesh3 = new THREE.Mesh(
     material
 )
 
+mesh1.position.y = - objectsDistance * 0
+mesh2.position.y = - objectsDistance * 1
+mesh3.position.y = - objectsDistance * 2
+
+mesh1.position.x = 2
+mesh2.position.x = -2
+mesh3.position.x = 2
+
 scene.add(mesh1, mesh2, mesh3)
+
+const sectionMeshes = [ mesh1, mesh2, mesh3 ]
 
 // Lights
 const directionalLight = new THREE.DirectionalLight('#ffffff', 3)
@@ -87,6 +109,13 @@ const renderer = new THREE.WebGLRenderer({
 renderer.setSize(sizes.width, sizes.height)
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 
+// Scroll
+let scrollY = window.scrollY
+
+window.addEventListener('scroll', () =>{
+    scrollY = window.scrollY
+})
+
 /**
  * Animate
  */
@@ -95,6 +124,13 @@ const clock = new THREE.Clock()
 const tick = () =>
 {
     const elapsedTime = clock.getElapsedTime()
+
+    camera.position.y = - scrollY / sizes.height * objectsDistance
+
+    for (const mesh of sectionMeshes){
+        mesh.rotation.x = elapsedTime * 0.1
+        mesh.rotation.y = elapsedTime * 0.12
+    }
 
     // Render
     renderer.render(scene, camera)

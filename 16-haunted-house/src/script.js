@@ -90,6 +90,31 @@ loader.load( '/little_tree.glb', function ( gltf ) {
     console.error( error );
 } );
 
+// Easter egg I guess haha I just wanted to test this model
+loader.load( '/goldfish.glb', function ( gltf ) {
+    const goldfish = gltf.scene;
+    goldfish.traverse((child) => {
+        if (child.isMesh) {
+            child.material.alphaHash = true
+            child.material.depthWrite = true
+            child.material.needsUpdate = true
+
+            goldfish.position.set(0,1,0)
+            goldfish.scale.setScalar(0.1)
+            scene.add(goldfish)
+        }
+        if (child.isMesh && child.material.map) {
+            child.material.map.minFilter = THREE.NearestFilter
+            child.material.map.magFilter = THREE.NearestFilter
+            child.material.map.generateMipmaps = false
+            child.material.map.needsUpdate = true
+        }
+    })
+}, undefined, function ( error ) {
+    console.error( error );
+} );
+
+
 // Texture loader
 const textureLoader = new THREE.TextureLoader()
 
