@@ -4529,7 +4529,7 @@ void main() {
 			#include <tonemapping_fragment>
 			#include <colorspace_fragment>
 
-		}`};const ys=new vo,Cx=new k_,Xc=document.querySelector("canvas.webgl"),li=new Fu,Ii={uTime:{value:0},uSwimStrength:{value:.44},uSwimSpeed:{value:3.2}};Cx.load("./goldfish.glb",function(s){const e=s.scene;e.position.set(0,0,0),li.add(e),e.traverse(t=>{if(t.isMesh){t.geometry.computeBoundingBox();const n=t.geometry.boundingBox.min.z,i=t.geometry.boundingBox.max.z;t.material.alphaTest=.5,t.material.depthWrite=!0,t.material.needsUpdate=!0,t.material.onBeforeCompile=r=>{r.uniforms.uTime=Ii.uTime,r.uniforms.uSwimStrength=Ii.uSwimStrength,r.uniforms.uSwimSpeed=Ii.uSwimSpeed,r.uniforms.uMinZ={value:n},r.uniforms.uMaxZ={value:i},r.vertexShader=r.vertexShader.replace("void main() {",`
+		}`};const ys=new vo,Cx=new k_,Xc=document.querySelector("canvas.webgl"),li=new Fu,Ii={uTime:{value:0},uSwimStrength:{value:.262},uSwimSpeed:{value:3.2}};Cx.load("./goldfish.glb",function(s){const e=s.scene;e.position.set(0,0,0),li.add(e),e.traverse(t=>{if(t.isMesh){t.geometry.computeBoundingBox();const n=t.geometry.boundingBox.min.z,i=t.geometry.boundingBox.max.z;t.material.alphaTest=.5,t.material.depthWrite=!0,t.material.needsUpdate=!0,t.material.onBeforeCompile=r=>{r.uniforms.uTime=Ii.uTime,r.uniforms.uSwimStrength=Ii.uSwimStrength,r.uniforms.uSwimSpeed=Ii.uSwimSpeed,r.uniforms.uMinZ={value:n},r.uniforms.uMaxZ={value:i},r.vertexShader=r.vertexShader.replace("void main() {",`
                 uniform float uTime;
                 uniform float uSwimStrength;
                 uniform float uSwimSpeed;
@@ -4544,10 +4544,11 @@ void main() {
 
                 bodyProgress = 1.0 - bodyProgress;
 
+                //first parameter - stiffness of head of fish (lower value is more stiff)
                 float tailFactor = mix(0.15, 1.0, pow(bodyProgress, 2.0));
 
                 float wave = sin(uTime * uSwimSpeed - bodyProgress * 6.28318) * uSwimStrength;
 
                 transformed.x += wave * tailFactor;
                 `)}}})});const sn={width:window.innerWidth,height:window.innerHeight};window.addEventListener("resize",()=>{sn.width=window.innerWidth,sn.height=window.innerHeight,Vn.aspect=sn.width/sn.height,Vn.updateProjectionMatrix(),gs.setSize(sn.width,sn.height),gs.setPixelRatio(Math.min(window.devicePixelRatio,2))});const Vn=new At(75,sn.width/sn.height,.1,100);Vn.position.x=1.3;Vn.position.y=.5;Vn.position.z=1.3;li.add(Vn);const ri=new ud(12381713,700149,12.379);ri.position.set(.2,2,.5);li.add(ri);const ai=new Uc(65535,5.5);ai.position.set(.2,1,.5);li.add(ai);const hr=new _d("#86cdff",.575);li.add(hr);const ci=new gr;ci.scale.set(100,100,100);ci.material.uniforms.turbidity.value=6.2;ci.material.uniforms.rayleigh.value=.116;ci.material.uniforms.mieCoefficient.value=0;ci.material.uniforms.mieDirectionalG.value=.7;ci.material.uniforms.sunPosition.value.set(.3,.02,-.9);li.add(ci);const _r=new m_(Vn,Xc);_r.enableDamping=!0;_r.enablePan=!1;_r.maxDistance=10;const Yc={skyColor:ri.color.getHex(),groundColor:ri.groundColor.getHex()},Mo=ys.addFolder("Hemisphere Light");Mo.add(ri,"intensity").min(0).max(20).step(.001);Mo.addColor(Yc,"groundColor").onChange(s=>{ri.groundColor.set(s)});Mo.addColor(Yc,"skyColor").onChange(s=>{ri.color.set(s)});const qc=ys.addFolder("Point Light");qc.add(ai,"intensity").min(0).max(20).step(.001);qc.addColor(ai,"color").onChange(s=>{ai.color.set(s)});const jc=ys.addFolder("Ambient Light");jc.add(hr,"intensity").min(0).max(20).step(.001);jc.addColor(hr,"color").onChange(s=>{hr.color.set(s)});const gs=new f_({canvas:Xc,antialias:!1});gs.setSize(sn.width,sn.height);gs.setPixelRatio(Math.min(window.devicePixelRatio,2));const $c=new wx(gs),_s=new Rx(4,li,Vn);_s.normalEdgeStrength=0;_s.depthEdgeStrength=.1;$c.addPass(_s);const Px=ys.addFolder("Pixelation");Px.add(_s,"pixelSize").min(1).max(20).step(1).onChange(s=>{_s.setPixelSize(s)});const Kc=ys.addFolder("Swimming Animation");Kc.add(Ii.uSwimStrength,"value",0,1,.001).name("strength");Kc.add(Ii.uSwimSpeed,"value",0,20,.001).name("speed");const Lx=new Nc,Zc=()=>{const s=Lx.getElapsedTime(),e=s*.5;ai.position.x=Math.cos(e)*2,ai.position.z=Math.sin(e)*2,_r.update(),Ii.uTime.value=s,$c.render(),window.requestAnimationFrame(Zc)};Zc();
-//# sourceMappingURL=index-C0OvZkmC.js.map
+//# sourceMappingURL=index-DMaadt7L.js.map

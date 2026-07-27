@@ -23,7 +23,7 @@ const scene = new THREE.Scene()
 
 const swimUniforms = {
   uTime: { value: 0 },
-  uSwimStrength: { value: 0.44 },
+  uSwimStrength: { value: 0.262 },
   uSwimSpeed: { value: 3.2 },
 }
 
@@ -75,6 +75,7 @@ loader.load( './goldfish.glb', function ( gltf ) {
 
                 bodyProgress = 1.0 - bodyProgress;
 
+                //first parameter - stiffness of head of fish (lower value is more stiff)
                 float tailFactor = mix(0.15, 1.0, pow(bodyProgress, 2.0));
 
                 float wave = sin(uTime * uSwimSpeed - bodyProgress * 6.28318) * uSwimStrength;
