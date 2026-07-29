@@ -26,12 +26,12 @@ window.addEventListener('dblclick', () => {
 // Initialize the GaussianSplats3D Viewer 
 const viewer = new GaussianSplats3D.Viewer({
     cameraUp: [0, -1, -0.5],
-    initialCameraPosition: [-1, -1, -5],
+    initialCameraPosition: [0, 0, -6],
     initialCameraLookAt: [0, 0, 0],
     sharedMemoryForWorkers: false
 });
 
-viewer.addSplatScene('models/converted_file.ksplat', {
+viewer.addSplatScene('./models/converted_file.ksplat', {
     splatAlphaRemovalThreshold: 5
 })
 .then(() => {
