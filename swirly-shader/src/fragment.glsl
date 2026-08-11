@@ -96,7 +96,7 @@ void main(){
 
     vec2 baseUV = rotate2D(n * 2.5) * sphereNormal.xy;
     
-    float basePattern = lines(baseUV, 0.5);
+    float basePattern = lines(baseUV, 0.6);
     float secondPattern = lines(baseUV, 0.1);
 
     vec3 baseColor = mix(baseSecond, baseFirst, basePattern);
