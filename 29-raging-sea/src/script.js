@@ -3,6 +3,8 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import GUI from 'lil-gui'
 import waterVertexShader from './shaders/water/vertex.glsl'
 import waterFragmentShader from './shaders/water/fragment.glsl'
+import { Sky } from 'three/addons/objects/Sky.js'
+
 
 /**
  * Base
@@ -21,7 +23,7 @@ const scene = new THREE.Scene()
  * Water
  */
 // Geometry
-const waterGeometry = new THREE.PlaneGeometry(3, 3, 512, 512)
+const waterGeometry = new THREE.PlaneGeometry(5, 5, 512, 512)
 
 debugObject.depthColor = '#186691'
 debugObject.surfaceColor = '#9bd8ff'
@@ -30,7 +32,7 @@ debugObject.surfaceColor = '#9bd8ff'
 const waterMaterial = new THREE.ShaderMaterial({
     vertexShader:waterVertexShader,
     fragmentShader:waterFragmentShader,
-    uniforms: 
+    uniforms:
     {
         uTime: { value: 0.0 },
         uBigWavesElevation: { value: 0.2 },
@@ -44,7 +46,7 @@ const waterMaterial = new THREE.ShaderMaterial({
         uSmallWavesFrequency: { value: 3 },
         uSmallWavesSpeed: { value: 0.2 },
         uSmallIterations: { value: 4 },
-    }
+    },
 })
 
 gui.addColor(debugObject, 'depthColor').onChange(() => { waterMaterial.uniforms.uDepthColor.value.set(debugObject.depthColor) })
@@ -65,6 +67,17 @@ gui.add(waterMaterial.uniforms.uSmallIterations, 'value').min(0).max(5).step(1).
 const water = new THREE.Mesh(waterGeometry, waterMaterial)
 water.rotation.x = - Math.PI * 0.5
 scene.add(water)
+
+// Sky
+const sky = new Sky()
+sky.scale.set(100, 100, 100)
+scene.add(sky)
+
+sky.material.uniforms['turbidity'].value = 6.2
+sky.material.uniforms['rayleigh'].value = 0.165
+sky.material.uniforms['mieCoefficient'].value = 0.0
+sky.material.uniforms['mieDirectionalG'].value = 0.373
+sky.material.uniforms['sunPosition'].value.set(-0.2, 2.0, -0.5)
 
 /**
  * Sizes
