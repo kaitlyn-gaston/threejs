@@ -90,49 +90,22 @@ loader.load( '/little_tree.glb', function ( gltf ) {
     console.error( error );
 } );
 
-// Easter egg I guess haha I just wanted to test this model
-loader.load( '/goldfish.glb', function ( gltf ) {
-    const goldfish = gltf.scene;
-    goldfish.traverse((child) => {
-        if (child.isMesh) {
-            child.material.alphaHash = true
-            child.material.depthWrite = true
-            child.material.needsUpdate = true
-
-            goldfish.position.set(0,1,0)
-            goldfish.scale.setScalar(0.1)
-            scene.add(goldfish)
-        }
-        if (child.isMesh && child.material.map) {
-            child.material.map.minFilter = THREE.NearestFilter
-            child.material.map.magFilter = THREE.NearestFilter
-            child.material.map.generateMipmaps = false
-            child.material.map.needsUpdate = true
-        }
-    })
-}, undefined, function ( error ) {
-    console.error( error );
-} );
-
-
 // Texture loader
 const textureLoader = new THREE.TextureLoader()
 
 // Floor textures
 const floorAlphaTexture = textureLoader.load('./floor/alpha.webp')
-const floorColorTexture = textureLoader.load('./floor/coast_sand_rocks_02_1k/coast_sand_rocks_02_diff_1k.webp')
+const floorColorTexture = textureLoader.load('./floor/leaf-tile.png')
 const floorARMTexture = textureLoader.load('./floor/coast_sand_rocks_02_1k/coast_sand_rocks_02_arm_1k.webp')
 const floorNormalTexture = textureLoader.load('./floor/coast_sand_rocks_02_1k/coast_sand_rocks_02_nor_gl_1k.webp')
 const floorDisplacementTexture = textureLoader.load('./floor/coast_sand_rocks_02_1k/coast_sand_rocks_02_disp_1k.webp')
 
 floorColorTexture.repeat.set(8, 8)
 floorARMTexture.repeat.set(8, 8)
-floorNormalTexture.repeat.set(8, 8)
 floorDisplacementTexture.repeat.set(8, 8)
 
 floorColorTexture.wrapS = THREE.RepeatWrapping
 floorARMTexture.wrapS = THREE.RepeatWrapping
-floorNormalTexture.wrapS = THREE.RepeatWrapping
 floorDisplacementTexture.wrapS = THREE.RepeatWrapping
 
 floorColorTexture.wrapT = THREE.RepeatWrapping
@@ -164,7 +137,7 @@ const floor = new THREE.Mesh(
         aoMap: floorARMTexture,
         roughnessMap: floorARMTexture,
         metalnessMap: floorARMTexture,
-        normalMap: floorNormalTexture,
+        //normalMap: floorNormalTexture,
         displacementMap: floorDisplacementTexture,
         displacementScale: 0.3,
         displacementBias: - 0.2
@@ -311,48 +284,51 @@ bush4.rotation.x = - 0.75
 scene.add(bush1, bush2, bush3, bush4)
 
 // Graves
-// Grave texture
-const graveColorTexture = textureLoader.load('./grave/plastered_stone_wall_1k/plastered_stone_wall_diff_1k.webp')
-const graveARMTexture = textureLoader.load('./grave/plastered_stone_wall_1k/plastered_stone_wall_arm_1k.webp')
-const graveNormalTexture = textureLoader.load('./grave/plastered_stone_wall_1k/plastered_stone_wall_nor_gl_1k.webp')
+const graves = new THREE.Group();
+scene.add(graves);
 
-graveColorTexture.colorSpace = THREE.SRGBColorSpace
+loader.load('/graves.glb', function (gltf) {
+    const originalGrave = gltf.scene;
+    originalGrave.scale.setScalar(0.3);
 
-graveColorTexture.repeat.set(0.3, 0.4)
-graveARMTexture.repeat.set(0.3, 0.4)
-graveNormalTexture.repeat.set(0.3, 0.4)
+    originalGrave.traverse((child) => {
+        if (child.isMesh) {
+            child.material.alphaHash = true;
+            child.material.depthWrite = true;
+            child.material.needsUpdate = true;
+            child.castShadow = true;
+            child.receiveShadow = true;
+        }
+        if (child.isMesh && child.material.map) {
+            child.material.map.minFilter = THREE.NearestFilter;
+            child.material.map.magFilter = THREE.NearestFilter;
+            child.material.map.generateMipmaps = false;
+            child.material.map.needsUpdate = true;
+        }
+    });
 
-const graveGeometry = new THREE.BoxGeometry(0.6, 0.8, 0.2)
-const graveMaterial = new THREE.MeshStandardMaterial({
-    map: graveColorTexture,
-    aoMap: graveARMTexture,
-    roughnessMap: graveARMTexture,
-    metalnessMap: graveARMTexture,
-    normalMap: graveNormalTexture
-})
+    for (let i = 0; i < 30; i++) {
+        const grave = originalGrave.clone();
 
-const graves = new THREE.Group()
-scene.add(graves)
+        const angle = Math.random() * Math.PI * 2;
+        const radius = 3 + Math.random() * 4;
 
-for(let i = 0; i < 30; i++)
-{
-    const angle = Math.random() * Math.PI * 2
-    const radius = 3 + Math.random() * 4
+        const x = Math.sin(angle) * radius;
+        const z = Math.cos(angle) * radius;
 
-    const x = Math.sin(angle) * radius
-    const z = Math.cos(angle) * radius
+        grave.position.x = x;
+        grave.position.y = Math.random() * 0.01;
+        grave.position.z = z;
 
-    const grave = new THREE.Mesh(graveGeometry, graveMaterial)
-    grave.position.x = x
-    grave.position.y = Math.random() * 0.4
-    grave.position.z = z
+        grave.rotation.x = (Math.random() - 0.5) * 0.4;
+        grave.rotation.y = (Math.random() - 0.5) * 0.4;
+        grave.rotation.z = (Math.random() - 0.5) * 0.4;
 
-    grave.rotation.x = (Math.random() - 0.5) * 0.4
-    grave.rotation.y = (Math.random() - 0.5) * 0.4
-    grave.rotation.z = (Math.random() - 0.5) * 0.4
-
-    graves.add(grave)
-}
+        graves.add(grave);
+    }
+}, undefined, function (error) {
+    console.error(error);
+});
 
 /**
  * Lights
@@ -440,12 +416,6 @@ walls.castShadow = true
 walls.receiveShadow = true
 roof.castShadow = true
 floor.receiveShadow = true
-
-for(const grave of graves.children)
-{
-    grave.castShadow = true
-    grave.receiveShadow = true
-}
 
 // Mappings
 directionalLight.shadow.mapSize.width = 256

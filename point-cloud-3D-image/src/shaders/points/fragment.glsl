@@ -1,5 +1,7 @@
 varying vec3 vColor;
 
+#define C0 0.28209479177387814
+
 void main()
 {
     // float strength = distance(gl_PointCoord, vec2(0.5));
@@ -13,6 +15,8 @@ void main()
     strength = 1.0 - strength;
     strength = pow(strength, 10.0);
 
+    //vec3 color = vColor;
+    //color.rgb = (color.rgb+1.0)*128.0;
     vec3 color = mix(vec3(0.0), vColor, strength);
     gl_FragColor = vec4(color, 1.0);
     #include <colorspace_fragment>

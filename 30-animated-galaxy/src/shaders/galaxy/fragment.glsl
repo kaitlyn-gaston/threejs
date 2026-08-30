@@ -4,9 +4,9 @@ void main()
 {
     // float strength = distance(gl_PointCoord, vec2(0.5));
     // strength *= 2.0;
-    // //strength = step(0.5, strength);
+    // strength = step(0.5, strength);
     // //get rid of below for a more pixelly look
-    // strength = 1.0 - strength;
+    //strength = 1.0 - strength;
 
     // Light Point
     float strength = distance(gl_PointCoord, vec2(0.5));
