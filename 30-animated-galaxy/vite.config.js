@@ -20,5 +20,6 @@ export default {
     [
         restart({ restart: [ '../static/**', ] }), // Restart server on static file change
         glsl() // Handle shader files
-    ]
+    ],
+    base: "https://kaitlyn-gaston.github.io/threejs/30-animated-galaxy/dist/"
 }
